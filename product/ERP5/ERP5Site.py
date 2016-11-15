@@ -235,7 +235,7 @@ class ERP5Site(FolderMixIn, CMFSite, CacheCookieMixin):
   last_id = 0
   icon = 'portal.gif'
   # Default value, prevents error during upgrade
-  isIndexable = ConstantGetter('isIndexable', value=True)
+  isIndexingRequired = ConstantGetter('isIndexingRequired', value=True)
 
   _properties = (
       { 'id':'title',
@@ -1967,7 +1967,7 @@ class ERP5Generator(PortalGenerator):
     portal = self.klass(id=id)
     # Make sure reindex will not be called until business templates
     # will be installed
-    setattr(portal, 'isIndexable', ConstantGetter('isIndexable', value=False))
+    setattr(portal, 'isIndexingRequired', ConstantGetter('isIndexingRequired', value=False))
 
     # This is only used to refine log level.
     # Has no functional use, and should never have any:
@@ -2259,7 +2259,7 @@ class ERP5Generator(PortalGenerator):
     # When no SQL connection was define on the site,
     # we don't want to make it crash
     if p.erp5_sql_connection_type is not None:
-      setattr(p, 'isIndexable', ConstantGetter('isIndexable', value=True))
+      setattr(p, 'isIndexingRequired', ConstantGetter('isIndexingRequired', value=True))
       # Clear portal ids sql table, like this we do not take
       # ids for a previously created web site
       p.portal_ids.clearGenerator(all=True)
