@@ -3009,8 +3009,7 @@ class CatalogMethodTemplateItem(ObjectTemplateItem):
         if method.meta_type == 'Z SQL Method':
           method = changeObjectClass(catalog, method_id, sql_class)
         if method.meta_type == 'Script (Python)':
-          self.convertPythonScriptToERP5PythonScript(method)
-          method = self.unrestrictedResolveValue(portal, path)
+          method = changeObjectClass(catalog, method_id, script_class)
         new_obj  = method.aq_base
         self._objects[path] = new_obj
 
