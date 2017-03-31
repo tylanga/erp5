@@ -56,16 +56,17 @@ class ERP5CatalogTool(BaseTool, CMFCore_CatalogTool):
     # Declarative security
     security = ClassSecurityInfo()
 
-    # Use all manage tab options from Folder except the one with label 'View',
-    # cause we would be forcing view to display absolute_url+'/view', as
-    # portal_catalog is a callable object
-    folder_manage_option = tuple([l for l in Folder.manage_options if \
-                                                        not l['label']=='View'])
-
-    manage_options = ({ 'label' : 'View', 'action' : 'view'},
-                      { 'label' : 'Overview', 'action' : 'manage_overview' },
-                      { 'label' : 'Catalog', 'action' : 'manage_catalogView'},
-                     ) + folder_manage_option
+    # Explicitly add tabs for manage_options
+    manage_options = ({'label': 'View', 'action': 'view'},
+                      {'label': 'Contents', 'action': 'manage_main'},
+                      {'label': 'Security', 'action': 'manage_access'},
+                      {'label': 'Undo', 'action': 'manage_UndoForm'},
+                      {'label': 'Ownership', 'action': 'manage_owner'},
+                      {'label': 'Interfaces', 'action': 'manage_interfaces'},
+                      {'label': 'Find', 'action': 'manage_findForm'},
+                      {'label': 'History', 'action': 'manage_change_history_page'},
+                      {'label': 'Workflows', 'action': 'manage_workflowsTab'},
+                     )
 
     property_sheets = ( PropertySheet.Base
                     , PropertySheet.SimpleItem
