@@ -1587,7 +1587,7 @@ class BusinessTemplateMixin(ERP5TypeTestCase, LogInterceptor):
     method_id = "z_fake_method"
     addSQLMethod = catalog.newContent
     addSQLMethod(portal_type='SQL Method', id=method_id, title='',
-                  connection_id='erp5_sql_connection', arguments_src='', src='')
+                 connection_id='erp5_sql_connection', arguments_src='', src='')
     zsql_method = catalog._getOb(method_id, None)
     self.assertTrue(zsql_method is not None)
     sequence.edit(zsql_method_id = method_id)
@@ -1612,7 +1612,7 @@ class BusinessTemplateMixin(ERP5TypeTestCase, LogInterceptor):
     method_id = "z_fake_method"
     addSQLMethod = catalog.newContent
     addSQLMethod(portal_type='SQL Method', id=method_id, title='',
-                  connection_id='erp5_sql_connection', arguments_src='', src='')
+                 connection_id='erp5_sql_connection', arguments_src='', src='')
     zsql_method = catalog._getOb(method_id, None)
     self.assertTrue(zsql_method is not None)
     sequence.edit(zsql_method_id = method_id)
@@ -1636,7 +1636,7 @@ class BusinessTemplateMixin(ERP5TypeTestCase, LogInterceptor):
     method_id = "z_another_fake_method"
     addSQLMethod =catalog.newContent
     addSQLMethod(portal_type='SQL Method', id=method_id, title='',
-                  connection_id='erp5_sql_connection', arguments_src='', src='')
+                 connection_id='erp5_sql_connection', arguments_src='', src='')
     zsql_method = catalog._getOb(method_id, None)
     self.assertTrue(zsql_method is not None)
     sequence.edit(another_zsql_method_id = method_id)
@@ -1717,7 +1717,7 @@ class BusinessTemplateMixin(ERP5TypeTestCase, LogInterceptor):
     # check filter
     filter_dict = catalog.getFilterDict()
     filter_dict = filter_dict[method_id]
-    self.assertEqual(filter_dict['expression_cache_key'], ['portal_type'])
+    self.assertItemsEqual(filter_dict['expression_cache_key'], ['portal_type'])
     self.assertEqual(filter_dict['type'], [])
     self.assertEqual(filter_dict['filtered'], 1)
     self.assertEqual(filter_dict['expression'], 'python: context.isPredicate()')
@@ -1734,7 +1734,7 @@ class BusinessTemplateMixin(ERP5TypeTestCase, LogInterceptor):
     # check filter
     filter_dict = catalog.getFilterDict()
     filter_dict = filter_dict[method_id]
-    self.assertEqual(filter_dict['expression_cache_key'], ['portal_type'])
+    self.assertItemsEqual(filter_dict['expression_cache_key'], ['portal_type'])
     self.assertEqual(filter_dict['type'], [])
     self.assertEqual(filter_dict['filtered'], 1)
     self.assertEqual(filter_dict['expression'], 'python: context.isDelivery()')
