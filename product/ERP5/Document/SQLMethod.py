@@ -133,8 +133,10 @@ class SQLMethod(XMLObject, ZSQL):
   def _edit(self, **kw):
     """
     'manange_edit' function for ZSQLMethod needs to be called everytime after
-    editing SQLMethod object. This would insure the updation of _arg and
+    editing SQLMethod object. This would insure the update of _arg and
     template attribute for SQLMethod which are used while creating query.
+
+    https://github.com/zopefoundation/Products.ZSQLMethods/blob/master/src/Shared/DC/ZRDB/DA.py#L353
     """
     XMLObject._edit(self, **kw)
     src = self.getSrc()
