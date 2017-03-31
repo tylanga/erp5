@@ -1715,15 +1715,10 @@ class BusinessTemplateMixin(ERP5TypeTestCase, LogInterceptor):
     # check catalog properties
     self.assertIn(method_id, catalog.sql_uncatalog_object)
     # check filter
-    if catalog.meta_type == 'ERP5 Catalog':
-      filter_dict = catalog.getFilterDict()
-      filter_dict = filter_dict[method_id]
-      self.assertEqual(filter_dict['expression_cache_key'], ['portal_type'])
-      self.assertEqual(filter_dict['type'], [])
-    elif catalog.meta_type == 'SQLCatalog':
-      filter_dict = catalog.filter_dict[method_id]
-      self.assertEqual(filter_dict['expression_cache_key'], ('portal_type',))
-      self.assertEqual(filter_dict['type'], ())
+    filter_dict = catalog.getFilterDict()
+    filter_dict = filter_dict[method_id]
+    self.assertEqual(filter_dict['expression_cache_key'], ['portal_type'])
+    self.assertEqual(filter_dict['type'], [])
     self.assertEqual(filter_dict['filtered'], 1)
     self.assertEqual(filter_dict['expression'], 'python: context.isPredicate()')
 
@@ -1737,15 +1732,10 @@ class BusinessTemplateMixin(ERP5TypeTestCase, LogInterceptor):
     # check catalog properties
     self.assertIn(method_id, catalog.sql_uncatalog_object)
     # check filter
-    if catalog.meta_type == 'ERP5 Catalog':
-      filter_dict = catalog.getFilterDict()
-      filter_dict = filter_dict[method_id]
-      self.assertEqual(filter_dict['expression_cache_key'], ['portal_type'])
-      self.assertEqual(filter_dict['type'], [])
-    elif catalog.meta_type == 'SQLCatalog':
-      filter_dict = catalog.filter_dict[method_id]
-      self.assertEqual(filter_dict['expression_cache_key'], ('portal_type',))
-      self.assertEqual(filter_dict['type'], ())
+    filter_dict = catalog.getFilterDict()
+    filter_dict = filter_dict[method_id]
+    self.assertEqual(filter_dict['expression_cache_key'], ['portal_type'])
+    self.assertEqual(filter_dict['type'], [])
     self.assertEqual(filter_dict['filtered'], 1)
     self.assertEqual(filter_dict['expression'], 'python: context.isDelivery()')
 
