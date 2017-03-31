@@ -44,25 +44,6 @@ from zLOG import LOG, INFO, TRACE, WARNING, ERROR
 import time
 import urllib
 
-def manage_addERP5Catalog(self, id, title,
-             vocab_id='create_default_catalog_',
-             REQUEST=None,
-             **kw):
-  """Add a Catalog object
-  """
-  id = str(id)
-  title = str(title)
-  vocab_id = str(vocab_id)
-  if vocab_id == 'create_default_catalog_':
-    vocab_id = None
-
-  c = ERP5Catalog(id, title, self)
-  self._setObject(id, c)
-  c = self._getOb(id)
-  if REQUEST is not None:
-    REQUEST['RESPONSE'].redirect( 'manage_main' )
-  return c
-
 class Filter(object):
   """
   Class to act as filter object for filterable methods.
@@ -166,14 +147,17 @@ class ERP5Catalog(Folder, Catalog):
   # Declarative security
   security = ClassSecurityInfo()
   security.declareObjectProtected(Permissions.AccessContentsInformation)
-  security.declareProtected(Permissions.ManagePortal,
-                              'manage_editProperties',
-                              'manage_changeProperties',
-                              'manage_propertiesForm',
-                                )
 
-  manage_options = ( Folder.manage_options+
-                     OFS.History.Historical.manage_options
+  # Explicitly add tabs for manage_options
+  manage_options = ({'label': 'View', 'action': 'view'},
+                    {'label': 'Contents', 'action': 'manage_main'},
+                    {'label': 'Security', 'action': 'manage_access'},
+                    {'label': 'Undo', 'action': 'manage_UndoForm'},
+                    {'label': 'Ownership', 'action': 'manage_owner'},
+                    {'label': 'Interfaces', 'action': 'manage_interfaces'},
+                    {'label': 'Find', 'action': 'manage_findForm'},
+                    {'label': 'History', 'action': 'manage_change_history_page'},
+                    {'label': 'Workflows', 'action': 'manage_workflowsTab'},
                    )
 
   # Declarative properties
@@ -183,9 +167,6 @@ class ERP5Catalog(Folder, Catalog):
                     , PropertySheet.CategoryCore
                     , PropertySheet.Catalog
                     )
-
-  # Declarative Constructors
-  constructors = (manage_addERP5Catalog,)
 
   # Use functions inherited from SQLCatalog for property setters
   _setPropValue = Catalog._setPropValue
