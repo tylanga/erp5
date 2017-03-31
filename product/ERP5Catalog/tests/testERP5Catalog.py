@@ -582,7 +582,8 @@ class TestERP5Catalog(ERP5TypeTestCase, LogInterceptor):
     """ % {'query_table' : query_table}
 
     portal_skins_custom = portal.portal_skins.custom
-    portal_skins_custom.newContent(portal_type='SQL Method',
+    portal_skins_custom.newContent(
+          portal_type='SQL Method',
           id = 'testMethod',
           title = '',
           connection_id = 'erp5_sql_connection',
@@ -1476,12 +1477,18 @@ class TestERP5Catalog(ERP5TypeTestCase, LogInterceptor):
     """
     for catalog, connection_id in ((original_catalog, original_connection_id),
         (new_catalog, self.new_erp5_sql_connection)):
-      catalog.newContent(portal_type='SQL Method',
-                    id='z_create_dummy_table', title='', arguments_src="",
+      catalog.newContent(
+                    portal_type='SQL Method',
+                    id='z_create_dummy_table',
+                    title='',
+                    arguments_src="",
                     connection_id=connection_id,
                     src=create_dummy_table_sql)
-      catalog.newContent(portal_type='SQL Method',
-                    id='z0_drop_dummy_table', title='', arguments_src="",
+      catalog.newContent(
+                    portal_type='SQL Method',
+                    id='z0_drop_dummy_table',
+                    title='',
+                    arguments_src="",
                     connection_id=connection_id,
                     src=drop_summy_table_sql)
 
@@ -2389,6 +2396,8 @@ class TestERP5Catalog(ERP5TypeTestCase, LogInterceptor):
 
     # Add a new table to the catalog
     sql_catalog = self.portal.portal_catalog.getSQLCatalog()
+    # Using newContent for an ERP5 object is not allowed to all roles, so
+    # better to fix the roles on the user
     sql_catalog.manage_setLocalRoles(user1, ['Author', 'Auditor', 'Manager'])
 
     local_roles_table = "test_local_roles"
@@ -2401,7 +2410,8 @@ CREATE TABLE `%s` (
   KEY `version` (`owner_reference`)
 ) ENGINE=InnoDB;
     """ % local_roles_table
-    sql_catalog.newContent(portal_type='SQL Method',
+    sql_catalog.newContent(
+          portal_type='SQL Method',
           id = 'z_create_%s' % local_roles_table,
           title = '',
           arguments_src = "",
@@ -2433,7 +2443,8 @@ VALUES
 </dtml-if>
 </dtml-in>
     """ % local_roles_table
-    sql_catalog.newContent(portal_type='SQL Method',
+    sql_catalog.newContent(
+          portal_type='SQL Method',
           id = 'z_catalog_%s_list' % local_roles_table,
           title = '',
           connection_id = 'erp5_sql_connection',
@@ -2572,6 +2583,8 @@ VALUES
 
     # Add a new table to the catalog
     sql_catalog = self.portal.portal_catalog.getSQLCatalog()
+    # Using newContent for an ERP5 object is not allowed to all roles, so
+    # better to fix the roles on the user
     sql_catalog.manage_setLocalRoles(user1, ['Author', 'Auditor', 'Manager'])
 
     local_roles_table = "test_assignee_local_roles"
@@ -2586,7 +2599,8 @@ CREATE TABLE `%s` (
   KEY `viewable_assignee_reference` (`viewable_assignee_reference`)
 ) ENGINE=InnoDB;
     """ % local_roles_table
-    sql_catalog.newContent(portal_type='SQL Method',
+    sql_catalog.newContent(
+          portal_type='SQL Method',
           id = 'z_create_%s' % local_roles_table,
           title = '',
           arguments_src = "",
@@ -2596,7 +2610,8 @@ CREATE TABLE `%s` (
     drop_local_role_table_sql = """
 DROP TABLE IF EXISTS %s
     """ % local_roles_table
-    sql_catalog.newContent(portal_type='SQL Method',
+    sql_catalog.newContent(
+          portal_type='SQL Method',
           id = 'z0_drop_%s' % local_roles_table,
           title = '',
           arguments_src = "",
@@ -2619,7 +2634,8 @@ VALUES
 </dtml-if>
 </dtml-in>
     """ % local_roles_table
-    sql_catalog.newContent(portal_type='SQL Method',
+    sql_catalog.newContent(
+          portal_type='SQL Method',
           id = 'z_catalog_%s_list' % local_roles_table,
           title = '',
           connection_id = 'erp5_sql_connection',
@@ -2731,6 +2747,8 @@ VALUES
 
     # Add a new table to the catalog
     sql_catalog = self.portal.portal_catalog.getSQLCatalog()
+    # Using newContent for an ERP5 object is not allowed to all roles, so
+    # better to fix the roles on the user
     sql_catalog.manage_setLocalRoles(user1, ['Author', 'Auditor', 'Manager'])
 
     local_roles_table = "test_user_or_group_local_roles"
@@ -2745,7 +2763,8 @@ CREATE TABLE `%s` (
   KEY `viewable_assignee_reference` (`viewable_assignee_reference`)
 ) ENGINE=InnoDB;
     """ % local_roles_table
-    sql_catalog.newContent(portal_type='SQL Method',
+    sql_catalog.newContent(
+          portal_type='SQL Method',
           id = 'z_create_%s' % local_roles_table,
           title = '',
           arguments_src = "",
@@ -2755,7 +2774,8 @@ CREATE TABLE `%s` (
     drop_local_role_table_sql = """
 DROP TABLE IF EXISTS %s
     """ % local_roles_table
-    sql_catalog.newContent(portal_type='SQL Method',
+    sql_catalog.newContent(
+          portal_type='SQL Method',
           id = 'z0_drop_%s' % local_roles_table,
           title = '',
           arguments_src = "",
@@ -2778,7 +2798,8 @@ VALUES
 </dtml-if>
 </dtml-in>
     """ % local_roles_table
-    sql_catalog.newContent(portal_type='SQL Method',
+    sql_catalog.newContent(
+          portal_type='SQL Method',
           id = 'z_catalog_%s_list' % local_roles_table,
           title = '',
           connection_id = 'erp5_sql_connection',
@@ -2986,6 +3007,8 @@ VALUES
 
     # Add a new table to the catalog
     sql_catalog = self.portal.portal_catalog.getSQLCatalog()
+    # Using newContent for an ERP5 object is not allowed to all roles, so
+    # better to fix the roles on the user
     sql_catalog.manage_setLocalRoles(user1, ['Author', 'Auditor', 'Manager'])
 
     local_roles_table = "another_test_user_or_group_local_roles"
@@ -2998,7 +3021,8 @@ CREATE TABLE `%s` (
   KEY `viewable_assignee_reference` (`viewable_assignee_reference`)
 ) ENGINE=InnoDB;
     """ % local_roles_table
-    sql_catalog.newContent(portal_type='SQL Method',
+    sql_catalog.newContent(
+          portal_type='SQL Method',
           id = 'z_create_%s' % local_roles_table,
           title = '',
           arguments_src = "",
@@ -3008,7 +3032,8 @@ CREATE TABLE `%s` (
     drop_local_role_table_sql = """
 DROP TABLE IF EXISTS %s
     """ % local_roles_table
-    sql_catalog.newContent(portal_type='SQL Method',
+    sql_catalog.newContent(
+          portal_type='SQL Method',
           id = 'z0_drop_%s' % local_roles_table,
           title = '',
           arguments_src = "",
@@ -3030,7 +3055,8 @@ VALUES
 </dtml-if>
 </dtml-in>
     """ % local_roles_table
-    sql_catalog.newContent(portal_type='SQL Method',
+    sql_catalog.newContent(
+          portal_type='SQL Method',
           id = 'z_catalog_%s_list' % local_roles_table,
           title = '',
           connection_id = 'erp5_sql_connection',
@@ -3227,7 +3253,8 @@ CREATE TABLE `%s` (
   KEY `viewable_assignee_reference` (`viewable_assignee_reference`)
 ) ENGINE=InnoDB;
     """ % local_roles_table
-    sql_catalog.newContent(portal_type='SQL Method',
+    sql_catalog.newContent(
+          portal_type='SQL Method',
           id = 'z_create_%s' % local_roles_table,
           title = '',
           arguments_src = "",
@@ -3237,7 +3264,8 @@ CREATE TABLE `%s` (
     drop_local_role_table_sql = """
 DROP TABLE IF EXISTS %s
     """ % local_roles_table
-    sql_catalog.newContent(portal_type='SQL Method',
+    sql_catalog.newContent(
+          portal_type='SQL Method',
           id = 'z0_drop_%s' % local_roles_table,
           title = '',
           arguments_src = "",
@@ -3259,7 +3287,8 @@ VALUES
 </dtml-if>
 </dtml-in>
     """ % local_roles_table
-    sql_catalog.newContent(portal_type='SQL Method',
+    sql_catalog.newContent(
+          portal_type='SQL Method',
           id = 'z_catalog_%s_list' % local_roles_table,
           title = '',
           connection_id = 'erp5_sql_connection',
