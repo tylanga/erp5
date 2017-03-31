@@ -83,14 +83,16 @@ class Filter(object):
 
   def get(self, key, default=None):
     try:
-      return self.__getitem__(key)
-    except KeyError: return default
+      return self[key]
+    except KeyError:
+      return default
 
   def __setitem__(self, key, value):
      self._method._setProperty(key, value)
 
   def __iter__(self):
-    return iter(('type', 'expression_cache_key', 'expression', 'filtered', 'expression_instance'))
+    return iter(('type', 'expression_cache_key', 'expression',
+                 'filtered', 'expression_instance'))
 
 class FilterDict(object):
   """
@@ -129,25 +131,22 @@ class FilterDict(object):
   def keys(self):
     return self._catalog.getFilterDict().keys()
 
-  def has_key(self, method_id):
-    return method_id in self.keys()
-
   def __setitem__(self, key, item):
-    filter_ = self.__getitem__(key)
-    for k, v in item.items():
-      filter_.__setitem__(k, v)
+    filter_ = self[key]
+    for k, v in item.iteritems():
+      filter_[k] = v
 
   def get(self, key, default=None):
-    if key in self:
-      return self.__getitem__(key)
-    else:
+    try:
+      return self[key]
+    except KeyError:
       return default
 
   def __iter__(self):
-    return iter(self.keys())
+    return iter(self._catalog.getFilterDict())
 
   def __contains__(self, item):
-    return item in self.keys()
+    return item in self._catalog.getFilterDict()
 
 class ERP5Catalog(Folder, Catalog):
   """
