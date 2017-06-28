@@ -5,6 +5,9 @@
 
   category -- the category to use
 """
+# our pylint integration does not support global variabled in zope python script.
+# pylint: disable=global-variable-undefined
+
 from ZODB.POSException import ConflictError
 portal = context.getPortalObject()
 translateString = context.Base_translateString
@@ -20,12 +23,12 @@ def getNiceID(s):
   s = s.lower()
   s = s.split()
   s = '-'.join(s)
-  s = filter(lambda c: c in valid_char, s)
+  s = [c for c in s if c in valid_char]
   s = s.replace('_', '-')
   return s
 
 def createWebSectionFromCategoryValue(container, category, depth, section_id=None):
-  global section_count
+  global section_count # xpylint: disable=global-variable-undefined
   if section_id is None:
     try:
       # Check if this category looks like an int
@@ -77,7 +80,7 @@ def createWebSectionFromCategoryValue(container, category, depth, section_id=Non
       new_section.updateLocalRolesOnSecurityGroups()
     except ConflictError:
       raise
-    except:
+    except Exception:
       failed_list.append(category.getRelativeUrl())
   else:
     new_section = container[section_id]
