@@ -30,6 +30,7 @@
 
 import gc
 import os
+from pylint import __version__ as pylint_version
 import shutil
 import tempfile
 import unittest
@@ -1688,11 +1689,18 @@ class _TestZodbComponent(SecurityTestCase):
 
     component.setTextContent('import unexistent_module')
     self.tic()
-    self.assertEqual(
-      [m.getMessage().translate() for m in component.checkConsistency()],
-      ["Error in Source Code: F:  1,  0: Unable to import 'unexistent_module' (import-error)"])
-    self.assertEqual(component.getTextContentErrorMessageList(),
-                      ["F:  1,  0: Unable to import 'unexistent_module' (import-error)"])
+    if pylint_version < '1.7': # BBB for pylint < 1.7
+      self.assertEqual(
+        [m.getMessage().translate() for m in component.checkConsistency()],
+        ["Error in Source Code: F:  1,  0: Unable to import 'unexistent_module' (import-error)"])
+      self.assertEqual(component.getTextContentErrorMessageList(),
+                        ["F:  1,  0: Unable to import 'unexistent_module' (import-error)"])
+    else:
+      self.assertEqual(
+        [m.getMessage().translate() for m in component.checkConsistency()],
+        ["Error in Source Code: E:  1,  0: Unable to import 'unexistent_module' (Failed to import module unexistent_module with error:"])
+      self.assertEqual(component.getTextContentErrorMessageList(),
+                        ["E:  1,  0: Unable to import 'unexistent_module' (Failed to import module unexistent_module with error:"])
     self.assertEqual(component.getTextContentWarningMessageList(),
                       ["W:  1,  0: Unused import unexistent_module (unused-import)"])
 
@@ -1725,16 +1733,24 @@ class _TestZodbComponent(SecurityTestCase):
        [ComponentMixin._message_text_content_not_set],
        [],
        []),
-      ('def foobar(*args, **kwargs)\n  return 42',
-       ["Error in Source Code: E:  1,  0: invalid syntax (syntax-error)"],
-       ["E:  1,  0: invalid syntax (syntax-error)"],
-       []),
       # Make sure that foobar NameError is at the end to make sure that after
       # defining foobar function, it is not available at all
       ('foobar',
        ["Error in Source Code: E:  1,  0: Undefined variable 'foobar' (undefined-variable)"],
        ["E:  1,  0: Undefined variable 'foobar' (undefined-variable)"],
        ["W:  1,  0: Statement seems to have no effect (pointless-statement)"]))
+    if pylint_version < '1.7': # BBB for pylint < 1.7
+      invalid_code_dict += \
+        ('def foobar(*args, **kwargs)\n  return 42',
+         ["Error in Source Code: E:  1,  0: invalid syntax (syntax-error)"],
+         ["E:  1,  0: invalid syntax (syntax-error)"],
+         []),
+    else:
+      invalid_code_dict += \
+        ('def foobar(*args, **kwargs)\n  return 42',
+         ["Error in Source Code: E:  1,  0: invalid syntax (<string>, line 1) (syntax-error)"],
+         ["E:  1,  0: invalid syntax (<string>, line 1) (syntax-error)"],
+         []),
 
     for (invalid_code,
          check_consistency_list,

@@ -437,6 +437,7 @@ def checkPythonSourceCode(source_code_str):
   try:
     from pylint.lint import Run
     from pylint.reporters.text import TextReporter
+    from pylint import __version__ as pylint_version
   except ImportError, error:
     try:
       compile(source_code_str, '<string>', 'exec')
@@ -475,7 +476,13 @@ def checkPythonSourceCode(source_code_str):
       input_file.write(source_code_str)
       input_file.seek(0)
 
-      Run([input_file.name, '--reports=n', '--indent-string="  "', '--zope=y',
+      if pylint_version > '1.7':
+        extra_arguments = ['--generated-members=REQUEST,acl_users,aq_parent',
+                           '--load-plugins=pylint.extensions.bad_builtin',]
+      else:
+        # BBB
+        extra_arguments = ['--zope=y',]
+      Run([input_file.name, '--reports=n', '--indent-string="  "',
            # Disable Refactoring and Convention messages which are too verbose
            # TODO-arnau: Should perphaps check ERP5 Naming Conventions?
            '--disable=R,C',
@@ -510,7 +517,7 @@ def checkPythonSourceCode(source_code_str):
            # 'Access to a protected member %s of a client class'
            '--disable=W0212',
            # string module does not only contain deprecated functions...
-           '--deprecated-modules=regsub,TERMIOS,Bastion,rexec'],
+           '--deprecated-modules=regsub,TERMIOS,Bastion,rexec'] + extra_arguments,
           reporter=TextReporter(output_file), exit=False)
 
     output_file.reset()

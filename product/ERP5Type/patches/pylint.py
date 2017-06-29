@@ -24,13 +24,20 @@ from inspect import getargspec
 try:
     from pylint.checkers import imports
     import astroid
+    try:
+        from astroid.exceptions import AstroidImportError, InconsistentMroError
+    except ImportError:
+        # BBB for astroid < 1.5
+        from astroid.exceptions import InferenceError as AstroidImportError
+        # BBB for astroid < 1.4
+        from astroid.exceptions import InferenceError as InconsistentMroError
 except ImportError:
     pass
 else:
     def _get_imported_module(self, importnode, modname):
         try:
             return importnode.do_import_module(modname)
-        except astroid.InferenceError, ex:
+        except (AstroidImportError, InconsistentMroError), ex:
             # BEGIN
 
             # XXX-arnau: Ignore ERP5 dynamic modules, hackish but required
@@ -64,11 +71,15 @@ else:
                 args = repr(modname)
             self.add_message("F0401", args=args, node=importnode)
 
-    if 'modnode' in getargspec(imports.ImportsChecker.get_imported_module).args:
-        # BBB for pylint < 1.4.0
-        def get_imported_module(self, modnode, importnode, modname):
-            return _get_imported_module(self, importnode, modname)
-    else:
-        get_imported_module = _get_imported_module
+    if hasattr(imports.ImportsChecker, 'get_imported_module'):
+        # BBB for pylint < 1.6.0
+        if 'modnode' in getargspec(imports.ImportsChecker.get_imported_module).args:
+            # BBB for pylint < 1.4.0
+            def get_imported_module(self, modnode, importnode, modname):
+                return _get_imported_module(self, importnode, modname)
+        else:
+            get_imported_module = _get_imported_module
 
-    imports.ImportsChecker.get_imported_module = get_imported_module
+        imports.ImportsChecker.get_imported_module = get_imported_module
+    else:
+        imports.ImportsChecker._get_imported_module = _get_imported_module
