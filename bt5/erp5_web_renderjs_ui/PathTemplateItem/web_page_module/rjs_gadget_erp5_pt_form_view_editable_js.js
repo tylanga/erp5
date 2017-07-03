@@ -158,6 +158,12 @@
                     error_text = 'Input data has errors';
                   } else if (error.target.status === 403) {
                     error_text = 'You do not have the permissions to edit the object';
+                  } else if (error.target.status === 0 && error.total === 0) {
+                    // backend cannot be reached and no data is being transfered 
+                    error_text = 'Document was not saved! Resubmit when you are online or the document accessible';
+                  } else {
+                    // display "unknown error" rather than destroying user's form data (throwing an error)
+                    error_text = 'Encountered an unknown error. Try to resubmit';
                   }
                   if (error_text !== undefined) {
                     return form_gadget.notifySubmitted()
@@ -168,16 +174,21 @@
                         return form_gadget.notifyChange(message + '.');
                       })
                       .push(function () {
+                        // when the server-side validation returns the error description
                         if (error.target.responseType === "blob") {
                           return jIO.util.readBlobAsText(error.target.response);
                         }
+                        // otherwise return (most-likely) textual response of the server
                         return {target: {result: error.target.response}};
                       })
                       .push(function (event) {
                         return form_gadget.displayFormulatorValidationError(JSON.parse(event.target.result));
-                      });
+                      })
+                      // most likely a JSON parse error because of invalid response which we will quietly ignore
+                      .fail(function () {});
                   }
                 }
+                // throwing an error is the last desperate option
                 throw error;
               });
           }
