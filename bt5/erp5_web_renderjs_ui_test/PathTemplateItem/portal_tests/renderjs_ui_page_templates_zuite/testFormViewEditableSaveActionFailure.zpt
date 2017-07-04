@@ -17,6 +17,16 @@
 </tr>
 <tr>
   <td>waitForElementPresent</td>
+  <td>//a[text()='Views']</td>
+  <td></td>
+</tr>
+<tr>
+  <td>click</td>
+  <td>//a[text()='Views']</td>
+  <td></td>
+</tr>
+<tr>
+  <td>waitForElementPresent</td>
   <td>//a[text()='Failing Edit']</td>
   <td></td>
 </tr>
@@ -52,12 +62,13 @@
   <td>//div[@data-gadget-scope='header']//button[text()='Save' and @type='submit']</td>
   <td></td>
 </tr>
+<!-- We wait for a notification to appear -->
 <tr>
-  <td>pause</td>
-  <td>1000</td>
+  <td>waitForElementPresent</td>
+  <td>//div[@data-gadget-scope='notification']/button</td>
   <td></td>
 </tr>
-<!-- Modified form data must stay -->
+<!-- Modified form data must stay after the notification -->
 <tr>
   <td>verifyValue</td>
   <td>//input[@name='field_my_title']</td>
