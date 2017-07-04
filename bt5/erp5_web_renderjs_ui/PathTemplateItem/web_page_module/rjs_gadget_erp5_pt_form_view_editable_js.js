@@ -155,8 +155,9 @@
               })
               .push(undefined, function (error) {
                 if (error.target !== undefined) {
-                  var error_text,
+                  var error_text = 'Encountered an unknown error. Try to resubmit',
                     promise;
+                  // improve error message if we can
                   if (error.target.status === 400) {
                     error_text = 'Input data has errors';
                   } else if (error.target.status === 403) {
@@ -164,22 +165,19 @@
                   } else if (error.target.status === 0) {
                     // no/default=0 status means a network connection problem 
                     error_text = 'Document was not saved! Resubmit when you are online or the document accessible';
-                  } else {
-                    // display "unknown error" rather than destroying user's form data (throwing an error)
-                    error_text = 'Encountered an unknown error. Try to resubmit';
                   }
-                  if (error_text !== undefined) {
-                    promise = form_gadget.notifySubmitted()
-                      .push(function () {
-                        return form_gadget.translate(error_text);
-                      })
-                      .push(function (message) {
-                        return form_gadget.notifyChange(message + '.');
-                      });
-                  }
+                  // display translated error_text to user
+                  promise = form_gadget.notifySubmitted()
+                    .push(function () {
+                      return form_gadget.translate(error_text);
+                    })
+                    .push(function (message) {
+                      return form_gadget.notifyChange(message + '.');
+                    });
+                  
+                  // if server validation of form data failed (indicated by response code 400)
+                  // we parse out field errors and display them to the user
                   if (error.target.status === 400) {
-                    // server validation of form data failed (indicated by reponse code 400)
-                    // we parse out field errors and display them to the user
                     promise
                       .push(function () {
                         // when the server-side validation returns the error description
