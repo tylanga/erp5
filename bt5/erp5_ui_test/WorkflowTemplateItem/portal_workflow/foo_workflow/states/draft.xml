@@ -37,6 +37,7 @@
                 <string>display_status_action</string>
                 <string>dummy_action</string>
                 <string>dummy_failing_action</string>
+                <string>failing_dialog_action</string>
                 <string>validate</string>
                 <string>validate_action</string>
               </tuple>
