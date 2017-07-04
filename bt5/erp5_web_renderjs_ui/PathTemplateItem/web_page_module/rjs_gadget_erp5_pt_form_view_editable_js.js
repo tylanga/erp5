@@ -121,6 +121,7 @@
         .push(function (validity) {
           if (validity) {
             return erp5_form.getContent()
+              // try to send the form data over the network to jIO storage
               .push(function (data) {
 
                 data[form_id.key] = form_id['default'];
@@ -134,6 +135,7 @@
                   )
                 ]);
               })
+              // handle response from the server
               .push(function (result_list) {
                 if (result_list[1].target.responseType === "blob") {
                   return jIO.util.readBlobAsText(result_list[1].target.response);
@@ -153,26 +155,32 @@
               })
               .push(undefined, function (error) {
                 if (error.target !== undefined) {
-                  var error_text;
+                  var error_text,
+                    promise;
                   if (error.target.status === 400) {
                     error_text = 'Input data has errors';
                   } else if (error.target.status === 403) {
                     error_text = 'You do not have the permissions to edit the object';
-                  } else if (error.target.status === 0 && error.total === 0) {
-                    // backend cannot be reached and no data is being transfered 
+                  } else if (error.target.status === 0) {
+                    // no/default=0 status means a network connection problem 
                     error_text = 'Document was not saved! Resubmit when you are online or the document accessible';
                   } else {
                     // display "unknown error" rather than destroying user's form data (throwing an error)
                     error_text = 'Encountered an unknown error. Try to resubmit';
                   }
                   if (error_text !== undefined) {
-                    return form_gadget.notifySubmitted()
+                    promise = form_gadget.notifySubmitted()
                       .push(function () {
                         return form_gadget.translate(error_text);
                       })
                       .push(function (message) {
                         return form_gadget.notifyChange(message + '.');
-                      })
+                      });
+                  }
+                  if (error.target.status === 400) {
+                    // server validation of form data failed (indicated by reponse code 400)
+                    // we parse out field errors and display them to the user
+                    promise
                       .push(function () {
                         // when the server-side validation returns the error description
                         if (error.target.responseType === "blob") {
@@ -183,10 +191,9 @@
                       })
                       .push(function (event) {
                         return form_gadget.displayFormulatorValidationError(JSON.parse(event.target.result));
-                      })
-                      // most likely a JSON parse error because of invalid response which we will quietly ignore
-                      .fail(function () {});
+                      });
                   }
+                  return promise;
                 }
                 // throwing an error is the last desperate option
                 throw error;
