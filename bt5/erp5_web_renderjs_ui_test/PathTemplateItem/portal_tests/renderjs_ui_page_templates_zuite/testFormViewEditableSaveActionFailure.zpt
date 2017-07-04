@@ -68,6 +68,11 @@
   <td>//div[@data-gadget-scope='notification']/button</td>
   <td></td>
 </tr>
+<tr>
+  <td>verifyText</td>
+  <td>//div[@data-gadget-scope='notification']/button</td>
+  <td>Encountered an unknown error. Try to resubmit.</td>
+</tr>
 <!-- Modified form data must stay after the notification -->
 <tr>
   <td>verifyValue</td>
