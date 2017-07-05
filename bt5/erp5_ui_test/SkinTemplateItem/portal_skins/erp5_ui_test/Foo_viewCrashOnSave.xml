@@ -35,11 +35,11 @@
         </item>
         <item>
             <key> <string>action</string> </key>
-            <value> <string>Workflow_statusModifyFail</string> </value>
+            <value> <string>Base_editCrash</string> </value>
         </item>
         <item>
             <key> <string>description</string> </key>
-            <value> <string>Workflow validation script which always fails with (modifiable) response code.</string> </value>
+            <value> <string>Failling view for Foo with rather minimal set of fields.</string> </value>
         </item>
         <item>
             <key> <string>edit_order</string> </key>
@@ -60,6 +60,10 @@
             <value>
               <list>
                 <string>left</string>
+                <string>right</string>
+                <string>center</string>
+                <string>bottom</string>
+                <string>hidden</string>
               </list>
             </value>
         </item>
@@ -68,12 +72,37 @@
             <value>
               <dictionary>
                 <item>
+                    <key> <string>bottom</string> </key>
+                    <value>
+                      <list/>
+                    </value>
+                </item>
+                <item>
+                    <key> <string>center</string> </key>
+                    <value>
+                      <list/>
+                    </value>
+                </item>
+                <item>
+                    <key> <string>hidden</string> </key>
+                    <value>
+                      <list/>
+                    </value>
+                </item>
+                <item>
                     <key> <string>left</string> </key>
                     <value>
                       <list>
-                        <string>my_comment</string>
-                        <string>my_workflow_action</string>
+                        <string>my_id</string>
+                        <string>my_title</string>
+                        <string>my_short_title</string>
                       </list>
+                    </value>
+                </item>
+                <item>
+                    <key> <string>right</string> </key>
+                    <value>
+                      <list/>
                     </value>
                 </item>
               </dictionary>
@@ -81,7 +110,7 @@
         </item>
         <item>
             <key> <string>id</string> </key>
-            <value> <string>BaseWorkflow_viewFailingWorkflowActionDialog</string> </value>
+            <value> <string>Foo_viewCrashOnSave</string> </value>
         </item>
         <item>
             <key> <string>method</string> </key>
@@ -89,11 +118,11 @@
         </item>
         <item>
             <key> <string>name</string> </key>
-            <value> <string>BaseWorkflow_viewFailingWorkflowActionDialog</string> </value>
+            <value> <string>Foo_viewCrashOnSave</string> </value>
         </item>
         <item>
             <key> <string>pt</string> </key>
-            <value> <string>form_dialog</string> </value>
+            <value> <string>form_view</string> </value>
         </item>
         <item>
             <key> <string>row_length</string> </key>
@@ -105,7 +134,7 @@
         </item>
         <item>
             <key> <string>title</string> </key>
-            <value> <string>Validate Workflow Action and Fail</string> </value>
+            <value> <string>Foo View Crash on Save</string> </value>
         </item>
         <item>
             <key> <string>unicode_mode</string> </key>

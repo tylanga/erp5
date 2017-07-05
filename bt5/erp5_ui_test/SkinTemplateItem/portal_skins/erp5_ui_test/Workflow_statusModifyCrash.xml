@@ -54,7 +54,7 @@
         </item>
         <item>
             <key> <string>id</string> </key>
-            <value> <string>Workflow_statusModifyFail</string> </value>
+            <value> <string>Workflow_statusModifyCrash</string> </value>
         </item>
         <item>
             <key> <string>portal_type</string> </key>
@@ -62,7 +62,7 @@
         </item>
         <item>
             <key> <string>title</string> </key>
-            <value> <string>Always failing Workflow Action</string> </value>
+            <value> <string>Always Crashing Workflow Action</string> </value>
         </item>
       </dictionary>
     </pickle>

@@ -1,4 +1,4 @@
-# Always fail with custom response code
+# Always crash with custom response code
 
 if request is None:
   request = container.REQUEST

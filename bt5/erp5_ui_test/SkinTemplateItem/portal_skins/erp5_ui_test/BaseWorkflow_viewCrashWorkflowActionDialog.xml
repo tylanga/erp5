@@ -35,11 +35,11 @@
         </item>
         <item>
             <key> <string>action</string> </key>
-            <value> <string>Base_editFailing</string> </value>
+            <value> <string>Workflow_statusModifyCrash</string> </value>
         </item>
         <item>
             <key> <string>description</string> </key>
-            <value> <string>Failling view for Foo</string> </value>
+            <value> <string>Workflow validation script which always crashes with (modifiable) response code.</string> </value>
         </item>
         <item>
             <key> <string>edit_order</string> </key>
@@ -60,10 +60,6 @@
             <value>
               <list>
                 <string>left</string>
-                <string>right</string>
-                <string>center</string>
-                <string>bottom</string>
-                <string>hidden</string>
               </list>
             </value>
         </item>
@@ -72,54 +68,11 @@
             <value>
               <dictionary>
                 <item>
-                    <key> <string>bottom</string> </key>
-                    <value>
-                      <list>
-                        <string>listbox</string>
-                      </list>
-                    </value>
-                </item>
-                <item>
-                    <key> <string>center</string> </key>
-                    <value>
-                      <list/>
-                    </value>
-                </item>
-                <item>
-                    <key> <string>hidden</string> </key>
-                    <value>
-                      <list>
-                        <string>listbox_title</string>
-                        <string>listbox_id</string>
-                        <string>listbox_quantity</string>
-                        <string>listbox_start_date</string>
-                      </list>
-                    </value>
-                </item>
-                <item>
                     <key> <string>left</string> </key>
                     <value>
                       <list>
-                        <string>my_id</string>
-                        <string>my_title</string>
-                        <string>my_short_title</string>
-                        <string>my_reference</string>
-                        <string>foo_category_title</string>
-                        <string>my_foo_category_title</string>
-                        <string>my_fake_category_title</string>
-                        <string>my_foo_big_category_title</string>
-                        <string>my_local_title</string>
-                      </list>
-                    </value>
-                </item>
-                <item>
-                    <key> <string>right</string> </key>
-                    <value>
-                      <list>
-                        <string>my_quantity</string>
-                        <string>my_quantity_read_only</string>
-                        <string>my_frozen</string>
-                        <string>my_lines_list</string>
+                        <string>my_comment</string>
+                        <string>my_workflow_action</string>
                       </list>
                     </value>
                 </item>
@@ -128,7 +81,7 @@
         </item>
         <item>
             <key> <string>id</string> </key>
-            <value> <string>Foo_viewFailling</string> </value>
+            <value> <string>BaseWorkflow_viewCrashWorkflowActionDialog</string> </value>
         </item>
         <item>
             <key> <string>method</string> </key>
@@ -136,11 +89,11 @@
         </item>
         <item>
             <key> <string>name</string> </key>
-            <value> <string>Foo_viewFailing</string> </value>
+            <value> <string>BaseWorkflow_viewCrashWorkflowActionDialog</string> </value>
         </item>
         <item>
             <key> <string>pt</string> </key>
-            <value> <string>form_view</string> </value>
+            <value> <string>form_dialog</string> </value>
         </item>
         <item>
             <key> <string>row_length</string> </key>
@@ -152,7 +105,7 @@
         </item>
         <item>
             <key> <string>title</string> </key>
-            <value> <string>Foo View Failling</string> </value>
+            <value> <string>Crashing Workflow Action</string> </value>
         </item>
         <item>
             <key> <string>unicode_mode</string> </key>
