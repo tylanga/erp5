@@ -27,12 +27,12 @@
 </tr>
 <tr>
   <td>waitForElementPresent</td>
-  <td>//a[text()='Failing Action Dialog']</td>
+  <td>//a[@data-i18n='Dummy Crashing Workflow Action']</td>
   <td></td>
 </tr>
 <tr>
   <td>click</td>
-  <td>//a[text()='Failing Action Dialog']</td>
+  <td>//a[@data-i18n='Dummy Crashing Workflow Action']</td>
   <td></td>
 </tr>
 <!-- Wait for gadget to be loaded -->
@@ -54,19 +54,15 @@
 </tr>
 <tr>
   <td>click</td>
-  <td>//input[@type='submit' and @value='Failing Action Dialog']</td>
+  <td>//input[@type='submit' and @value='Dummy Crashing Workflow Action']</td>
   <td></td>
 </tr>
-<!-- We wait for a notification to appear -->
+<!-- Wait for the notification to appear. We cannot use verifyText because the button
+     is there all the time. It gets text assigned and is shown asynchronously later. -->
 <tr>
   <td>waitForElementPresent</td>
-  <td>//div[@data-gadget-scope='notification']/button</td>
+  <td>//div[@data-gadget-scope='notification']/button[text()='Encountered an unknown error. Try to resubmit.']</td>
   <td></td>
-</tr>
-<tr>
-  <td>verifyText</td>
-  <td>//div[@data-gadget-scope='notification']/button</td>
-  <td>Encountered an unknown error. Try to resubmit.</td>
 </tr>
 <!-- Modified form data must stay after the notification -->
 <tr>
